@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { SliderBox } from "react-native-image-slider-box";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 import DropDownPicker from "react-native-dropdown-picker";
 import { Ionicons } from "@expo/vector-icons";
 import axios from 'axios';
@@ -213,6 +214,9 @@ const HomeScreen = () => {
         fetchData();
 
     }, []);
+
+    const cart = useSelector((state) => state.cart.cart);
+
     return (
         <SafeAreaView
             style={{
@@ -321,7 +325,7 @@ const HomeScreen = () => {
                     {deals.map((item, index) => (
                         <Pressable
                             onPress={() =>
-                                navigation.navigate("Info", {
+                                navigation.navigate("ProductInfo", {
                                     id: item.id,
                                     title: item.title,
                                     price: item?.price,

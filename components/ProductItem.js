@@ -1,7 +1,19 @@
 import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import React from 'react'
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/CartRedux";
 
 const ProductItem = ({ item }) => {
+    const [addedToCart, setAddedToCart] = useState(false);
+    const dispatch = useDispatch();
+    const addItemToCart = (item) => {
+        setAddedToCart(true);
+        dispatch(addToCart(item));
+        setTimeout(() => {
+            setAddedToCart(false);
+        }, 60000);
+    };
     return (
         <Pressable style={{ marginHorizontal: 28, marginVertical: 25 }}>
             <Image
@@ -26,7 +38,7 @@ const ProductItem = ({ item }) => {
             </View>
 
             <Pressable
-
+                onPress={() => addItemToCart(item)}
                 style={{
                     backgroundColor: "#FFC72C",
                     padding: 10,
@@ -37,7 +49,13 @@ const ProductItem = ({ item }) => {
                     marginTop: 10,
                 }}
             >
-                <Text>Added to Cart</Text>
+                {addedToCart ? (
+                    <View>
+                        <Text>Added to Cart</Text>
+                    </View>
+                ) : (
+                    <Text>Add to Cart</Text>
+                )}
             </Pressable>
         </Pressable>
     )
