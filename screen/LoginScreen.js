@@ -32,7 +32,7 @@ const LoginScreen = () => {
             const token = data.token;
 
             AsyncStorage.setItem("authToken", token);
-            navigation.navigate("Home");
+            navigation.replace("Main");
         } catch (error) {
             alert("Login Error", "Invalid Email");
             console.log(error);

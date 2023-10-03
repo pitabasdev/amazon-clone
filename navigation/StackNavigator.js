@@ -5,12 +5,13 @@ import RegisterScreen from '../screen/RegisterScreen';
 import HomeScreen from '../screen/HomeScreen';
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
-
+    const Tab = createBottomTabNavigator();
     function BottomTabs() {
         return (
             <Tab.Navigator>
@@ -31,7 +32,7 @@ const StackNavigator = () => {
                 />
                 <Tab.Screen
                     name="Profile"
-                    component={ProfileScreen}
+                    component={HomeScreen}
                     options={{
                         tabBarLabel: "Profile",
                         tabBarLabelStyle: { color: "#008E97" },
@@ -46,7 +47,7 @@ const StackNavigator = () => {
 
                 <Tab.Screen
                     name="Cart"
-                    component={CartScreen}
+                    component={HomeScreen}
                     options={{
                         tabBarLabel: "Cart",
                         tabBarLabelStyle: { color: "#008E97" },
@@ -67,7 +68,7 @@ const StackNavigator = () => {
             <Stack.Navigator>
                 <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="Register" component={RegisterScreen} />
-                <Stack.Screen options={{ headerShown: false }} name='Home' component={HomeScreen} />
+                <Stack.Screen options={{ headerShown: false }} name='Main' component={BottomTabs} />
             </Stack.Navigator>
         </NavigationContainer>
     )
