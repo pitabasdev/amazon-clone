@@ -11,8 +11,10 @@ import { Feather, AntDesign } from "@expo/vector-icons";
 import { useEffect, useState, useContext } from "react";
 import React from 'react'
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const AddressScreen = () => {
+    const navigation = useNavigation();
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 50 }}>
             <View
