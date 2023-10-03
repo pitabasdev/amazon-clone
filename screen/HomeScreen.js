@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import axios from 'axios';
 import { MaterialIcons } from "@expo/vector-icons";
 import ProductItem from '../components/ProductItem';
+import { useNavigation } from '@react-navigation/native';
 const HomeScreen = () => {
     const list = [
         {
@@ -180,6 +181,7 @@ const HomeScreen = () => {
     ];
     const [products, setProducts] = useState([]);
     const [open, setOpen] = useState(false);
+    const navigation = useNavigation();
     const [category, setCategory] = useState("jewelery");
 
     const [items, setItems] = useState([
@@ -315,6 +317,7 @@ const HomeScreen = () => {
                         flexDirection: "row",
                         alignItems: "center",
                         flexWrap: "wrap",
+                        marginHorizontal: 23
                     }}
                 >
                     {deals.map((item, index) => (
@@ -361,7 +364,7 @@ const HomeScreen = () => {
                     {offers.map((item, index) => (
                         <Pressable
                             onPress={() =>
-                                navigation.navigate("Info", {
+                                navigation.navigate("ProductInfo", {
                                     id: item.id,
                                     title: item.title,
                                     price: item?.price,

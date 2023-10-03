@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ProductInfo from '../screen/ProductInfo';
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
     const Tab = createBottomTabNavigator();
@@ -69,6 +70,7 @@ const StackNavigator = () => {
                 <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="Register" component={RegisterScreen} />
                 <Stack.Screen options={{ headerShown: false }} name='Main' component={BottomTabs} />
+                <Stack.Screen options={{ headerShown: false }} name='ProductInfo' component={ProductInfo} />
             </Stack.Navigator>
         </NavigationContainer>
     )

@@ -3,7 +3,7 @@ import React from 'react'
 
 const ProductItem = ({ item }) => {
     return (
-        <Pressable style={{ marginHorizontal: 20, marginVertical: 25 }}>
+        <Pressable style={{ marginHorizontal: 28, marginVertical: 25 }}>
             <Image
                 style={{ width: 150, height: 150, resizeMode: "contain" }}
                 source={{ uri: item?.image }}
