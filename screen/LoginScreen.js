@@ -2,12 +2,42 @@ import { View, Text, SafeAreaView, StyleSheet, Image, KeyboardAvoidingView, Text
 import React, { useState } from 'react'
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import axios from 'axios';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from '@react-navigation/native';
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const navigation = useNavigation();
+    const handleData = async () => {
+        const user = {
+            email: email,
+            password: password,
+        };
 
+        try {
+            const response = await fetch("http://192.168.233.1:8000/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            });
+
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+
+            const data = await response.json();
+            const token = data.token;
+
+            AsyncStorage.setItem("authToken", token);
+            navigation.navigate("Home");
+        } catch (error) {
+            alert("Login Error", "Invalid Email");
+            console.log(error);
+        }
+    };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "white", alignItems: "center", marginTop: 50 }}>
             <View>
@@ -102,6 +132,7 @@ const LoginScreen = () => {
                 </View>
                 <View style={{ marginTop: 50 }} />
                 <Pressable
+                    onPress={handleData}
                     style={{
                         width: 200,
                         backgroundColor: "#FEBE10",
