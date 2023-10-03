@@ -1,6 +1,7 @@
 import { View, Text, SafeAreaView, StyleSheet, Image, KeyboardAvoidingView, TextInput, Pressable, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { MaterialIcons } from "@expo/vector-icons";
+import { useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -9,6 +10,19 @@ const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const navigation = useNavigation();
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            try {
+                const token = await AsyncStorage.getItem("authToken");
+                if (token) {
+                    navigation.replace("Main");
+                }
+            } catch (err) {
+                console.log("error message", err);
+            }
+        };
+        checkLoginStatus();
+    }, []);
     const handleData = async () => {
         const user = {
             email: email,
