@@ -213,8 +213,6 @@ const HomeScreen = () => {
         fetchData();
 
     }, []);
-    console.log(products)
-
     return (
         <SafeAreaView
             style={{
