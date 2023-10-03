@@ -10,6 +10,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductInfo from '../screen/ProductInfo';
+import AddressScreen from '../screen/AddressScreen';
+import Address from '../screen/Address';
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
     const Tab = createBottomTabNavigator();
@@ -71,6 +73,8 @@ const StackNavigator = () => {
                 <Stack.Screen options={{ headerShown: false }} name="Register" component={RegisterScreen} />
                 <Stack.Screen options={{ headerShown: false }} name='Main' component={BottomTabs} />
                 <Stack.Screen options={{ headerShown: false }} name='ProductInfo' component={ProductInfo} />
+                <Stack.Screen options={{ headerShown: false }} name='Address' component={AddressScreen} />
+                <Stack.Screen options={{ headerShown: false }} name='Add' component={Address} />
             </Stack.Navigator>
         </NavigationContainer>
     )
