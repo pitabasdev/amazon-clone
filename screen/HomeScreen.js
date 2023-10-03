@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, ScrollView, Image, Pressable, TextInput } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { SliderBox } from "react-native-image-slider-box";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { Ionicons } from "@expo/vector-icons";
+import axios from 'axios';
 import { MaterialIcons } from "@expo/vector-icons";
 import ProductItem from '../components/ProductItem';
 const HomeScreen = () => {
@@ -178,23 +179,40 @@ const HomeScreen = () => {
         },
     ];
     const [products, setProducts] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [category, setCategory] = useState("jewelery");
 
+    const [items, setItems] = useState([
+        { label: "Men's clothing", value: "men's clothing" },
+        { label: "jewelery", value: "jewelery" },
+        { label: "electronics", value: "electronics" },
+        { label: "women's clothing", value: "women's clothing" },
+    ]);
 
-
-
+    const onGenderOpen = useCallback(() => {
+        setCompanyOpen(false);
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("https://fakestoreapi.com/products");
-                setProducts(response.data);
+                const response = await fetch("https://fakestoreapi.com/products");
+                if (response.ok) {
+                    const data = await response.json();
+                    setProducts(data);
+                } else {
+                    console.log("HTTP Error:", response.status);
+                }
             } catch (error) {
-                console.log("error message", error);
+                console.log("Error:", error);
             }
         };
 
         fetchData();
+
     }, []);
+    console.log(products)
+
     return (
         <SafeAreaView
             style={{
@@ -403,16 +421,10 @@ const HomeScreen = () => {
                         marginHorizontal: 10,
                         marginTop: 20,
                         width: "45%",
-                        marginBottom: 50,
+                        marginBottom: open ? 50 : 15,
                     }}
                 >
-                    <View>
-                        {products?.map((item, index) => {
-                            <ProductItem item={item} key={index} />
-
-                        })}
-                    </View>
-                    {/* <DropDownPicker
+                    <DropDownPicker
                         style={{
                             borderColor: "#B7B7B7",
                             height: 30,
@@ -430,15 +442,23 @@ const HomeScreen = () => {
                         // onChangeValue={onChange}
                         zIndex={3000}
                         zIndexInverse={1000}
-                    /> */}
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            flexWrap: "wrap",
-                        }}
-                    ></View>
+                    />
                 </View>
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                    }}
+                >
+                    {products
+                        ?.filter((item) => item.category === category)
+                        .map((item, index) => (
+                            <ProductItem item={item} key={index} />
+                        ))}
+
+                </View>
+
             </ScrollView>
         </SafeAreaView>
     )
