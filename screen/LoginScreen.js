@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, KeyboardAvoidingView, TextInput, Pressable } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image, KeyboardAvoidingView, TextInput, Pressable, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -14,28 +14,36 @@ const LoginScreen = () => {
             email: email,
             password: password,
         };
+        if (user.email == '' || user.password == '') {
+            Alert.alert("Please fill all the fields")
+        } else {
 
-        try {
-            const response = await fetch("http://192.168.233.1:8000/login", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(user),
-            });
 
-            if (!response.ok) {
-                throw new Error('Login failed');
+            try {
+                const response = await fetch("http://192.168.233.1:8000/login", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(user),
+                });
+
+                if (!response.ok) {
+                    // throw new Error('Login failed');
+                    Alert.alert("Login Failed,Check Entered Details!!");
+                } else {
+                    Alert.alert("Login Successfully")
+                }
+
+                const data = await response.json();
+                const token = data.token;
+
+                AsyncStorage.setItem("authToken", token);
+                navigation.replace("Main");
+            } catch (error) {
+                alert("Login Error", "Invalid Email");
+                console.log(error);
             }
-
-            const data = await response.json();
-            const token = data.token;
-
-            AsyncStorage.setItem("authToken", token);
-            navigation.replace("Main");
-        } catch (error) {
-            alert("Login Error", "Invalid Email");
-            console.log(error);
         }
     };
     return (

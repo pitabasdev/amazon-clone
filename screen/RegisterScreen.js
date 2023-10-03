@@ -44,7 +44,7 @@ const RegisterScreen = () => {
         if (response.ok) {
           Alert.alert(
             "Registration successful",
-            "You have been registered Successfully"
+            "You have been registered Successfully !! Check Email"
           );
           navigation.navigate("Login");
         }
