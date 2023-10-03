@@ -6,6 +6,7 @@ import { Feather } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import ProductItem from '../components/ProductItem';
 const HomeScreen = () => {
     const list = [
         {
@@ -405,6 +406,12 @@ const HomeScreen = () => {
                         marginBottom: 50,
                     }}
                 >
+                    <View>
+                        {products?.map((item, index) => {
+                            <ProductItem item={item} key={index} />
+
+                        })}
+                    </View>
                     {/* <DropDownPicker
                         style={{
                             borderColor: "#B7B7B7",
